@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Proyecto Python con Flask y Tailwind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <style>
+        /* --- 50% CSS Puro Personalizado --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .main-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+        }
+        .context-section p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .form-group input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .flash-message {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>¡Bienvenido a Mi Aplicación Web!</h1>
+
+        <div class="context-section text-lg text-gray-800 leading-relaxed mb-10 px-4 py-6 bg-blue-50 rounded-lg border border-blue-200">
+            <p class="mb-4">
+                Este es un pequeño contexto de tu proyecto. Aquí puedes describir brevemente
+                el propósito de tu aplicación, lo que ofrece a los usuarios o cualquier
+                información relevante que quieras destacar. La idea es dar una primera
+                impresión antes de que el usuario interactúe con el formulario.
+                Por ejemplo, si es una aplicación de contacto, podrías explicar qué tipo de
+                consultas manejas o el tiempo de respuesta esperado.
+            </p>
+            <p>
+                Nuestra misión es conectar a las personas y facilitar la comunicación.
+                Utiliza el formulario a continuación para enviarnos tus preguntas, sugerencias
+                o comentarios. ¡Estamos aquí para ayudarte!
+            </p>
+            <p class="text-center mt-6 font-semibold text-blue-700">
+                ¡Gracias por visitar nuestra página!
+            </p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="list-none p-0">
+                {% for category, message in messages %}
+                    <li class="flash-message {{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/submit" method="POST" class="p-8 bg-white rounded-xl shadow-lg border border-gray-100">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center border-b-2 pb-4 border-gray-200">
+                Envíanos un Mensaje
+            </h2>
+
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required
+                       class="text-gray-900 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-base border-gray-300 rounded-md">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="Ej. tu.correo@ejemplo.com" required
+                       class="text-gray-900 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-base border-gray-300 rounded-md">
+            </div>
+
+            <div class="form-group">
+                <label for="mensaje">Tu Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="6" placeholder="Escribe tu mensaje aquí..." required
+                          class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"></textarea>
+            </div>
+
+            <div class="form-group mt-6">
+                <input type="submit" value="Enviar Mensaje">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
